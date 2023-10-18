@@ -1,5 +1,5 @@
 import { ContactForm } from './ContactForm/ContactForm';
-import { Contacts } from './Contacts/Contacts';
+import { Contacts } from './Contacts/Contacts.jsx';
 import { ContactFilter } from './ContactFilter/ContactFilter';
 
 export const App = () => {
