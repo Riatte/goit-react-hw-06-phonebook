@@ -5,10 +5,16 @@ import {
   StyledFormInput,
   StyledFormBtn,
 } from './ContactFormStyled';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/contactsSlice';
 
-export const ContactForm = ({ createContact }) => {
+export const ContactForm = () => {
   const [number, setNumber] = useState('');
   const [name, setName] = useState('');
+
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
   const handleChangeName = event => {
     setName(event.target.value);
@@ -17,12 +23,18 @@ export const ContactForm = ({ createContact }) => {
   const handleChangeNumber = event => {
     setNumber(event.target.value);
   };
+
   const handleSubmit = evt => {
     evt.preventDefault();
-    createContact({
-      name: name,
-      number: number,
-    });
+    const formattedName = name.toLowerCase();
+    const isNewContact = contacts.every(
+      contact => contact.name.toLowerCase() !== formattedName
+    );
+    if (!isNewContact) {
+      alert(`${name} is already exist`);
+      return;
+    }
+    dispatch(addContact({ name, number }));
     clear();
   };
 
