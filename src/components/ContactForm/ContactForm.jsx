@@ -8,6 +8,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
 import { addContact } from 'redux/contactsSlice';
+import { nanoid } from '@reduxjs/toolkit';
 
 export const ContactForm = () => {
   const [number, setNumber] = useState('');
@@ -34,7 +35,7 @@ export const ContactForm = () => {
       alert(`${name} is already exist`);
       return;
     }
-    dispatch(addContact({ name, number }));
+    dispatch(addContact({ name, number, id: nanoid() }));
     clear();
   };
 
